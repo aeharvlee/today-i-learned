@@ -1,0 +1,15 @@
+{
+  "name": "exception",
+  "version": "1.0.0",
+  "description": "",
+  "main": "function.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "assert": "^2.0.0",
+    "mocha": "^6.2.0"
+  }
+}
