@@ -1,3 +1,5 @@
+let XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+
 getURL = (url) => {
     return new Promise ((resolve, reject) => {
         let req = new XMLHttpRequest();
@@ -30,16 +32,7 @@ let request = {
 };
 
 let main = () => {
-    let pushValue = null;
-
-    recordValue = (results, value) => {
-        results.push(value);
-        return results;
-    }
-
-    pushValue = recordValue.bind(null, []);
-
-    return request.information().then(pushValue).then(request.cookie).then(pushValue);
+    return Promise.all([request.information(), request.cookie()])
 }
 
 main().then((value) => {
