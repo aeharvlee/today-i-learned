@@ -18,7 +18,7 @@ describe("Promise Test", () => {
 
     it("should bad pattern", () => {
         return mayBeRejected().then(failTest).catch((error) => {
-            assert.equal(error.message === "woo");
+            assert(error.message === "woo");
         })
     })
 });

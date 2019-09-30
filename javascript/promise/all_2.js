@@ -1,9 +1,9 @@
 timerPromisefy = (delay) => {
-    return Promise.resolve(
+    return new Promise((resolve) => {
         setTimeout(() => {
             resolve(delay);
-        }, delay)
-    );
+        }, delay);
+    });
 }
 
 let startDate = Date.now();
