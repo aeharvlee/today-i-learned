@@ -229,7 +229,7 @@ LE는 오직 DV만 발행하는데, DV만이 유일하게 자동화될 수 있�
 
 ### ACME Issuance Overview
 
-![ACME](/Users/aeharv/Dropbox/blog/markdown_posts/images/ACME.png)
+![ACME](./images/ACME.png)
 
 1. 클라이언트가 Lets Encrypt 서버에 "인증서 발행해주세요!" 요청을 한다.
 2. "You need to demonstrate these things"
@@ -320,13 +320,13 @@ agent는 LE CA에게 도메인을 통제하고 있다는 걸 증명하기 위해
 
 도전과제와 함께 LE CA는 논스값을 제공하는데, agent는 반드시 개인키쌍으로 서명해서 키쌍을 갖고 있다는 것을 증명해야 한다.
 
-![howitworks_challenge](/Users/aeharv/Dropbox/blog/markdown_posts/images/howitworks_challenge.png)
+![howitworks_challenge](./images/howitworks_challenge.png)
 
 agent는 도전과제 중 하나를 완료한다. 알려진 URI에 자원을 생성하는 것을 달성했다고 해보자. 특정 경로에 파일을 생성하는 과제 말이다. agent는 또한 제공받은 논스를 개인키로 서명한다. agent가 이러한 과정들을 완수하면, CA에게 "검증 ㄱㄱ"하라고 알린다.
 
 CA는 과제를 잘 완수했는지를 확인한다. CA는 논스에 대한 서명을 검증하고, 특정 파일을 해당 웹서버에서 다운로드 받는다. 그리고 다운로드 받은 파일의 내용이 기대했던 내용인지 확인한다.
 
-![howitworks_authorization](/Users/aeharv/Dropbox/blog/markdown_posts/images/howitworks_authorization.png)
+![howitworks_authorization](./images/howitworks_authorization.png)
 
 만약 논스에 대한 서명이 유효하다면 과제를 잘 통과한 것이고 공개키로 식별되는 agent는 도메인에 대한 인증서 관리를 할 수 있게 된다. agent가 사용하는 키 쌍은 도메인에 대한 "authorized key pair"로 부른다.
 
@@ -338,8 +338,8 @@ CA는 과제를 잘 완수했는지를 확인한다. CA는 논스에 대한 서�
 
 LE CA가 요청을 받으면, 두 개의 서명을 모두 검증하고 모두 괜찮다면, 해당 도메인에 대한 인증서를 CSR에 있는 공개키와 함께 발행하고 agent에게 전해준다.
 
-![howitworks_certificate](/Users/aeharv/Dropbox/blog/markdown_posts/images/howitworks_certificate.png)
+![howitworks_certificate](./images/howitworks_certificate.png)
 
 재발행도 비슷한 방법으로 동작한다. agent는 트정 도메인에 대해 권한이 있는 키쌍으로 재발행 요청을 서명한다. 그리고 LE CA는 요청이 authorized인지 확인하고, 맞다면 재발행 정보를 normal revocation channels (i.e. OCSP)에 발행한다. 그러면 브라우저들과 같이 연관있는 주체들이 폐기된 인증서는 받아들이지 않고 그 인증서를 폐기처분한다.
 
-![howitworks_revocation](/Users/aeharv/Dropbox/blog/markdown_posts/images/howitworks_revocation.png)
+![howitworks_revocation](./images/howitworks_revocation.png)
