@@ -213,16 +213,16 @@ Announced to the public in November 2014. Work still to complete:
 
 ### Types of Certificates
 
-* Domain Validation (DV): asserts control of a domain (what Let's Encrypt does)
+* **Domain Validation (DV):** asserts control of a domain (what Let's Encrypt does)
   Sorts control of a domain and ties that to a public key, so basically says "this is the public key for the domain that you're trying to talk to you."
   
   If you encrypt with this public key, the idea is that this domain is the only domain that I'll be able to decrypt.
   도메인을 통제하고 있다는 것을 공개키를 통해 입증한다. "너가 지금 소통하고 있는 도메인에 대한 공개키가 바로 여깄어!"라고 말하는 것이다. 사이트 소유주 혹은 관리인이 공개키로 암호화를 하면, 이 도메인은 유일하게 내가 복호화할 수 있는 것인 것. 뭔 소리인지는 잠시 뒤에 입증.
   
-* Organization Validation (OV): asserts control of a domain as well as basic organizational vetting
+* **Organization Validation (OV):** asserts control of a domain as well as basic organizational vetting
   DV랑 비슷하지만 name of an entity를 포함한다는 점이 다르다. 
   
-* Extended Validation (EV): asserts control of a domain as well as extended organizational vetting
+* **Extended Validation (EV):** asserts control of a domain as well as extended organizational vetting
   OV랑 비슷하고 entity에 대한 더 많은 정보를 요구한다.
 
 LE는 오직 DV만 발행하는데, DV만이 유일하게 자동화될 수 있기 때문이다. 조직차원의 엔티티를 자동으로 증명할 수 있는 방법은 없다. 그러나 ACME를 사용하면 도메인에 대한 통제권을 확인하는 과정을 자동화할 수 있다. 자동화할 수 있다는 건, 수많은 DV를 발행할 수 있다는 뜻이기도 하다. 우리가 서비스를 원하는 스케일을 감당할 수 있는 건 DV뿐이다.
@@ -241,14 +241,14 @@ LE는 오직 DV만 발행하는데, DV만이 유일하게 자동화될 수 있�
 
 ### ACME Challenge Types
 
-* HTTP: Put a file on your web server
+* **HTTP: Put a file on your web server**
   This is where we give you a special file we tell you to put it at a special place or on this particular path on your web server and then we pick a path that is not likely to be in use for other things and the file is not a file that's likely to be already on your web server anywhere, so if  you demonstrate to us that you can place this special file at a particular predetermined location in your server that's a demonstration of control.
 
-* DVSNI: Provision a virtual host at your domain's IP address
+* **DVSNI: Provision a virtual host at your domain's IP address**
   가장 적게 쓰이는 옵션이지만 특정 상황에서는 꽤 괜찮은 과제이다.
   we ask you to essentially provision a virtual host that your domain IP address in such a way that it demonstartes proper control. 
 
-* DNS: Provision a DNS record for your domain
+* **DNS: Provision a DNS record for your domain**
 
   The thrid way is DNS validation and it's a lot like HTTP validation but instead of putting a file on your server you can think of it as taking that file and sticking it in a DNS record because if you can control if you can demontsrate control of DNS for your domain then we're gonna with just assuming that you can contorl the server because you can point DNS wherever you want. DNS is fairly popular and I believe it's growing becase DNS is the only challenge that dosen't require us to actually contact your server for verification so sometime people for example I have an internal web server that's not on the public web but they have a publicly resolvable DNS record they can use the DNS challenge and prove control over the server without having Let's encrypt actually go back to ther server and talk to it to check for a file. DNS is also used a lot for devices which we'll talk about a little later.
 
@@ -334,12 +334,10 @@ CA는 과제를 잘 완수했는지를 확인한다. CA는 논스에 대한 서�
 
 일단 agent가 authorized key pair를 가지면 인증서를 요청, 갱신, 그리고 삭제하는 건 간단하다. 인증서 관리 메시지만 전송하고 해당 메시지를 authorized key pair로 서명하면 된다.
 
-도메인에 대한 인증서를 얻으려면, agent는 PKCS#10 Certificate Signing Request를 생성하면 된다. Certificate Signing Request란, LE CA에게 특정 도메인에 대해 인증서를 발행해줄 것을 요청하는 요청이다. 보통 CSR은 CSR에 포함된 공개키에 상응하는 개인키로 한 서명을 포함한다. agent는 또한 전체 CSR을 특정 도메인에 대한 authorized key로 서명하여 LE CA가 해당 도메인이 authorized라는 걸 확인할 수 있게끔 한다.
-
 LE CA가 요청을 받으면, 두 개의 서명을 모두 검증하고 모두 괜찮다면, 해당 도메인에 대한 인증서를 CSR에 있는 공개키와 함께 발행하고 agent에게 전해준다.
 
 ![howitworks_certificate](./images/howitworks_certificate.png)
 
-재발행도 비슷한 방법으로 동작한다. agent는 트정 도메인에 대해 권한이 있는 키쌍으로 재발행 요청을 서명한다. 그리고 LE CA는 요청이 authorized인지 확인하고, 맞다면 재발행 정보를 normal revocation channels (i.e. OCSP)에 발행한다. 그러면 브라우저들과 같이 연관있는 주체들이 폐기된 인증서는 받아들이지 않고 그 인증서를 폐기처분한다.
+재발행도 비슷한 방법으로 동작한다. agent는 특정 도메인에 대해 권한이 있는 키쌍으로 재발행 요청을 서명한다. 그리고 LE CA는 요청이 authorized인지 확인하고, 맞다면 재발행 정보를 normal revocation channels (i.e. OCSP)에 발행한다. 그러면 브라우저들과 같이 연관있는 주체들이 폐기된 인증서는 받아들이지 않고 그 인증서를 폐기처분한다.
 
 ![howitworks_revocation](./images/howitworks_revocation.png)
