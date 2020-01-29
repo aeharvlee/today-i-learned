@@ -11,7 +11,7 @@
 ### 1.1 디렉토리 생성 및 GOPATH 설정
 
 ```shell
-mkdir ~/hands_on_RESTful_with_Go & cd ~/hands_on_RESTful_with_Go
+mkdir ~/hands_on_RESTful_with_Go && cd ~/hands_on_RESTful_with_Go
 export GOPATH=~/hands_on_RESTful_with_Go
 ```
 
